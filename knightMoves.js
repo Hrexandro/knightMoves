@@ -24,8 +24,8 @@
 
 function createBoard() {
   let result = [];
-  for (let x = 0; x <= 8; x++) {
-    for (let y = 0; y <= 8; y++) {
+  for (let x = 0; x <= 4; x++) {
+    for (let y = 0; y <= 4; y++) {
       result.push([x, y]);
     }
   }
@@ -34,111 +34,103 @@ function createBoard() {
 let board = createBoard();
 console.log(board);
 
-// function Node(data, left = null, right = null) {
-//     return {
-//       data,
-//       left,
-//       right,
-//     };
-//   }
+//issue with identifying already visited fields
+//   [
+//     [ 0, 0 ], [ 1, 2 ], [ 2, 4 ], [ 3, 6 ],
+//     [ 4, 8 ], [ 5, 6 ], [ 6, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
+//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ]
+//   ].includes( [ 8, 8 ])
+// returns false - why?
+function knightMoves(start, destination, path = []) {
 
-function knight(
-  curentPosition,
-  move1,
-  move2,
-  move3,
-  move4,
-  move5,
-  move6,
-  move7,
-  move8
-) {
-  return {
-    curentPosition,
-    move1,
-    move2,
-    move3,
-    move4,
-    move5,
-    move6,
-    move7,
-    move8,
-    // move1:[position[0] + 1, position[1] + 2],
-    // move2:[position[0] - 1, position[1] + 2],
-    // move3:[position[0] + 1, position[1] - 2],
-    // move4:[position[0] - 1, position[1] - 2],
-    // move5:[position[0] + 2, position[1] + 1],
-    // move6:[position[0] - 2, position[1] + 1],
-    // move7:[position[0] + 2, position[1] - 1],
-    // move8:[position[0] - 2, position[1] - 1]
-  };
-}
-
-function knightMoves(start, destination, path = [start]) {
-  if (start[0] > 8 || start[0] < 0 || start[1] > 8 || start[1] < 0) {
-    return;
-  }
-  console.log(start);
-  //console.log(destination);
-
+  console.log('path is ' + path)
+  console.log(path)
+  console.log(Array.isArray(path))
+  console.log(path.includes(start))
   if (start === destination) {
-    return "success";
-  } else {
-    return {
-      curentPosition: start,
-      move1: knightMoves([start[0] + 1, start[1] + 2], destination),
-      move2: knightMoves([start[0] - 1, start[1] + 2], destination),
-      move3: knightMoves([start[0] + 1, start[1] - 2], destination),
-      move4: knightMoves([start[0] - 1, start[1] - 2], destination),
-      move5: knightMoves([start[0] + 2, start[1] + 1], destination),
-      move6: knightMoves([start[0] - 2, start[1] + 1], destination),
-      move7: knightMoves([start[0] + 2, start[1] - 1], destination),
-      move8: knightMoves([start[0] - 2, start[1] - 1], destination),
-    };
+    return `success, ${destination} found, path taken: ${path}`
   }
 
-  knightMoves([start[0] + 1, start[1] + 2], destination);
-  knightMoves([start[0] - 1, start[1] + 2], destination);
-  knightMoves([start[0] + 1, start[1] - 2], destination);
-  knightMoves([start[0] - 1, start[1] - 2], destination);
+  function movementViabilityTest(coordinateArray) {
 
-  knightMoves([start[0] + 2, start[1] + 1], destination);
-  knightMoves([start[0] - 2, start[1] + 1], destination);
-  knightMoves([start[0] + 2, start[1] - 1], destination);
-  knightMoves([start[0] - 2, start[1] - 1], destination);
-  //knight has position
-  //possible knight moves should be
-  //[+1,+2][-1,+2][+1,-2][-1,-2]
-  //[+2,+1][-2,+1][+2,-1][-2,-1]
+    if (path.includes(coordinateArray)) {
+      console.log("already visited")
+      return false
+    } else if (coordinateArray[0] > 8 || coordinateArray[0] < 0) {
+      console.log('larger0')
+      return false
+    } else if (coordinateArray[1] > 8 || coordinateArray[1] < 0) {
+      console.log('larger1')
+      return false
+    } else {
+      return true
+    }
+  }
+  let nextMove = null
+
+
+  if (movementViabilityTest([start[0] + 1, start[1] + 2])) {
+    nextMove = [start[0] + 1, start[1] + 2]
+  } else if (movementViabilityTest([start[0] - 1, start[1] + 2])) {
+    nextMove = [start[0] - 1, start[1] + 2]
+  } else if (movementViabilityTest([start[0] + 1, start[1] - 2])) {
+    nextMove = [start[0] + 1, start[1] - 2]
+  } else if (movementViabilityTest([start[0] - 1, start[1] - 2])) {
+    nextMove = [start[0] - 1, start[1] - 2]
+  } else if (movementViabilityTest([start[0] + 2, start[1] + 1])) {
+    nextMove = [start[0] + 2, start[1] + 1]
+  } else if (movementViabilityTest([start[0] - 2, start[1] + 1])) {
+    nextMove = [start[0] - 2, start[1] + 1]
+  } else if (movementViabilityTest([start[0] + 2, start[1] - 1])) {
+    nextMove = [start[0] + 2, start[1] - 1]
+  } else if (movementViabilityTest([start[0] - 2, start[1] - 1])) {
+    nextMove = [start[0] - 2, start[1] - 1]
+  }
+  console.log("next knight Moves runs")
+  knightMoves(nextMove, destination, [...path, start])
+
+  //return nextMove
 }
+// knightMoves([start[0] + 1, start[1] + 2], destination),
+// knightMoves([start[0] - 1, start[1] + 2], destination),
+// knightMoves([start[0] + 1, start[1] - 2], destination),
+// knightMoves([start[0] - 1, start[1] - 2], destination),
+// knightMoves([start[0] + 2, start[1] + 1], destination),
+// knightMoves([start[0] - 2, start[1] + 1], destination),
+// knightMoves([start[0] + 2, start[1] - 1], destination),
+// knightMoves([start[0] - 2, start[1] - 1], destination),
 
-function testMoves(start, destination, path = [start]) {
-  if (start[0] > 8 || start[0] < 0 || start[1] > 8 || start[1] < 0) {
-    console.log("end reached")
-    return;
-  }
-  console.log(start);
-  //console.log(destination);
+
+console.log(knightMoves([0, 0], [1, 2]))
+
+// move1: knightMoves([start[0] + 1, start[1] + 2], destination),
+// move2: knightMoves([start[0] - 1, start[1] + 2], destination),
+// move3: knightMoves([start[0] + 1, start[1] - 2], destination),
+// move4: knightMoves([start[0] - 1, start[1] - 2], destination),
+// move5: knightMoves([start[0] + 2, start[1] + 1], destination),
+// move6: knightMoves([start[0] - 2, start[1] + 1], destination),
+// move7: knightMoves([start[0] + 2, start[1] - 1], destination),
+// move8: knightMoves([start[0] - 2, start[1] - 1], destination),
 
 
-  //try restricting the next move by conditionals
-  //so some of them are not returned in this iteration
-
-  if (start === destination) {
-    return "success";
-  } else {
-    return {
-      curentPosition: start,
-      move1: testMoves([start[0] + 1, start[1] + 0], destination),
-      move2: testMoves([start[0] - 1, start[1] + 0], destination),
-      move3: testMoves([start[0] + 1, start[1] - 1], destination),
-      move4: testMoves([start[0] + 1, start[1] + 0], destination),
-      move5: testMoves([start[0] + 0, start[1] + 1], destination),
-      move6: testMoves([start[0] - 1, start[1] + 1], destination),
-      move7: testMoves([start[0] + 0, start[1] - 1], destination),
-      move8: testMoves([start[0] - 1, start[1] - 1], destination),
-    };
-  }
-}
-
-console.log(testMoves([0, 0], [1, 2]));
+  // if (movementViabilityTest([start + 1, start + 2])) {
+  //   knightMoves([start[0] + 1, start[1] + 2], destination, [...path, start])
+  // } else if (movementViabilityTest([start[0] - 1, start[1] + 2])) {
+  //   knightMoves([start[0] - 1, start[1] + 2], destination, [...path, start])
+  // } else if (movementViabilityTest([start[0] + 1, start[1] - 2])) {
+  //   knightMoves([start[0] + 1, start[1] - 2], destination, [...path, start])
+  // } else if (movementViabilityTest([start[0] - 1, start[1] - 2])) {
+  //   knightMoves([start[0] - 1, start[1] - 2], destination, [...path, start])
+  // } else if (movementViabilityTest([start[0] + 2, start[1] + 1])) {
+  //   knightMoves([start[0] + 2, start[1] + 1], destination, [...path, start])
+  // } else if (movementViabilityTest([start[0] + 2, start[1] + 1]))
