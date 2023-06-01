@@ -52,18 +52,21 @@ console.log(board);
 //   ].includes( [ 8, 8 ])
 // returns false - why?
 function knightMoves(start, destination, path = []) {
-
+  console.log('function start')
   console.log('path is ' + path)
   console.log(path)
   console.log(Array.isArray(path))
-  console.log(path.includes(start))
+  console.log('current start is ' + start)
   if (start === destination) {
     return `success, ${destination} found, path taken: ${path}`
   }
 
-  function movementViabilityTest(coordinateArray) {
+  //make a different function checking the path.includes, without changing to strings, this is too messy
 
-    if (path.includes(coordinateArray)) {
+  function movementViabilityTest(coordinateArray) {
+    console.log(`!!!!! ${coordinateArray[0]+coordinateArray[1]}`)
+    console.log(path.includes(coordinateArray[0]+coordinateArray[1]))
+    if (path.includes(coordinateArray[0]+coordinateArray[1])) {
       console.log("already visited")
       return false
     } else if (coordinateArray[0] > 8 || coordinateArray[0] < 0) {
@@ -96,8 +99,8 @@ function knightMoves(start, destination, path = []) {
   } else if (movementViabilityTest([start[0] - 2, start[1] - 1])) {
     nextMove = [start[0] - 2, start[1] - 1]
   }
-  console.log("next knight Moves runs")
-  knightMoves(nextMove, destination, [...path, start])
+  console.log("next knight Moves runs, the next move is" + nextMove)
+  knightMoves(nextMove, destination, [...path, start[0].toString()+start[1].toString()])
 
   //return nextMove
 }
