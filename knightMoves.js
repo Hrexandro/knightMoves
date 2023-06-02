@@ -57,16 +57,18 @@ function knightMoves(start, destination, path = []) {
   console.log(path)
   console.log(Array.isArray(path))
   console.log('current start is ' + start)
-  if (start === destination) {
+  if (start[0] === destination[0] && start[1] === destination[1]) {
     return `success, ${destination} found, path taken: ${path}`
   }
 
-  //make a different function checking the path.includes, without changing to strings, this is too messy
+  // visitedPlaces.find(
+  //   (element) => element[0] === location[0] && element[1] === location[1]
+  // );
 
   function movementViabilityTest(coordinateArray) {
-    console.log(`!!!!! ${coordinateArray[0]+coordinateArray[1]}`)
-    console.log(path.includes(coordinateArray[0]+coordinateArray[1]))
-    if (path.includes(coordinateArray[0]+coordinateArray[1])) {
+    // console.log(`!!!!! ${coordinateArray[0]+coordinateArray[1]}`)
+    // console.log(path.includes(coordinateArray[0]+coordinateArray[1]))
+    if (path.find((element)=> element[0] === coordinateArray[0] && element[1]===coordinateArray[1])) {
       console.log("already visited")
       return false
     } else if (coordinateArray[0] > 8 || coordinateArray[0] < 0) {
@@ -100,7 +102,7 @@ function knightMoves(start, destination, path = []) {
     nextMove = [start[0] - 2, start[1] - 1]
   }
   console.log("next knight Moves runs, the next move is" + nextMove)
-  knightMoves(nextMove, destination, [...path, start[0].toString()+start[1].toString()])
+  return knightMoves(nextMove, destination, [...path, start])
 
   //return nextMove
 }
