@@ -24,8 +24,8 @@
 
 function createBoard() {
   let result = [];
-  for (let x = 0; x <= 4; x++) {
-    for (let y = 0; y <= 4; y++) {
+  for (let x = 0; x <= 8; x++) {
+    for (let y = 0; y <= 8; y++) {
       result.push([x, y]);
     }
   }
@@ -34,23 +34,6 @@ function createBoard() {
 let board = createBoard();
 console.log(board);
 
-//issue with identifying already visited fields
-//   [
-//     [ 0, 0 ], [ 1, 2 ], [ 2, 4 ], [ 3, 6 ],
-//     [ 4, 8 ], [ 5, 6 ], [ 6, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ], [ 7, 6 ],
-//     [ 8, 8 ], [ 7, 6 ], [ 8, 8 ]
-//   ].includes( [ 8, 8 ])
-// returns false - why?
 function knightMoves(start, destination, path = []) {
   console.log('function start')
   console.log('path is ' + path)
@@ -58,23 +41,20 @@ function knightMoves(start, destination, path = []) {
   console.log(Array.isArray(path))
   console.log('current start is ' + start)
   if (start[0] === destination[0] && start[1] === destination[1]) {
-    return `success, ${destination} found, path taken: ${path}`
+    console.log(`=> You made it in ${path.length === 1 ? path.length + ' move' : path.length + ' moves'}!  Here's your path:`)
+    path.forEach((e) => console.log(e))
+    console.log(destination)
+    return `Function concluded successfully.`
   }
 
-  // visitedPlaces.find(
-  //   (element) => element[0] === location[0] && element[1] === location[1]
-  // );
-
   function movementViabilityTest(coordinateArray) {
-    // console.log(`!!!!! ${coordinateArray[0]+coordinateArray[1]}`)
-    // console.log(path.includes(coordinateArray[0]+coordinateArray[1]))
     if (path.find((element)=> element[0] === coordinateArray[0] && element[1]===coordinateArray[1])) {
       console.log("already visited")
       return false
-    } else if (coordinateArray[0] > 8 || coordinateArray[0] < 0) {
+    } else if (coordinateArray[0] > 7 || coordinateArray[0] < 0) {
       console.log('larger0')
       return false
-    } else if (coordinateArray[1] > 8 || coordinateArray[1] < 0) {
+    } else if (coordinateArray[1] > 7 || coordinateArray[1] < 0) {
       console.log('larger1')
       return false
     } else {
@@ -116,8 +96,11 @@ function knightMoves(start, destination, path = []) {
 // knightMoves([start[0] - 2, start[1] - 1], destination),
 
 
-console.log(knightMoves([0, 0], [1, 2]))
+console.log(knightMoves([0, 0], [3, 3]))
 
+//console.log(knightMoves([0, 0], [2, 4]))
+
+//console.log([[1],[2]])
 // move1: knightMoves([start[0] + 1, start[1] + 2], destination),
 // move2: knightMoves([start[0] - 1, start[1] + 2], destination),
 // move3: knightMoves([start[0] + 1, start[1] - 2], destination),
@@ -127,15 +110,3 @@ console.log(knightMoves([0, 0], [1, 2]))
 // move7: knightMoves([start[0] + 2, start[1] - 1], destination),
 // move8: knightMoves([start[0] - 2, start[1] - 1], destination),
 
-
-  // if (movementViabilityTest([start + 1, start + 2])) {
-  //   knightMoves([start[0] + 1, start[1] + 2], destination, [...path, start])
-  // } else if (movementViabilityTest([start[0] - 1, start[1] + 2])) {
-  //   knightMoves([start[0] - 1, start[1] + 2], destination, [...path, start])
-  // } else if (movementViabilityTest([start[0] + 1, start[1] - 2])) {
-  //   knightMoves([start[0] + 1, start[1] - 2], destination, [...path, start])
-  // } else if (movementViabilityTest([start[0] - 1, start[1] - 2])) {
-  //   knightMoves([start[0] - 1, start[1] - 2], destination, [...path, start])
-  // } else if (movementViabilityTest([start[0] + 2, start[1] + 1])) {
-  //   knightMoves([start[0] + 2, start[1] + 1], destination, [...path, start])
-  // } else if (movementViabilityTest([start[0] + 2, start[1] + 1]))
