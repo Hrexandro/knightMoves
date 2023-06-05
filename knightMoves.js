@@ -9,10 +9,10 @@
 // Put together a script that creates a game board and a knight.
 // Treat all possible moves the knight could make as children in a tree. Don’t allow any moves to go off the board.
 // Decide which search algorithm is best to use for this case. Hint: one of them could be a potentially infinite series.
-// Use the chosen search algorithm to find the shortest path
-// between the starting square (or node) and the ending square. Output what that full path looks like, e.g.:
+// Use the chosen search algorithm to find the shortest currentPath
+// between the starting square (or node) and the ending square. Output what that full currentPath looks like, e.g.:
 //   > knightMoves([3,3],[4,3])
-//   => You made it in 3 moves!  Here's your path:
+//   => You made it in 3 moves!  Here's your currentPath:
 //     [3,3]
 //     [4,5]
 //     [2,4]
@@ -34,21 +34,34 @@ function createBoard() {
 let board = createBoard();
 console.log(board);
 
-function knightMoves(start, destination, path = []) {
+function knightMoves(start, destination, currentPath = [], iteration = 0, testedPaths = []) {
   console.log('function start')
-  console.log('path is ' + path)
-  console.log(path)
-  console.log(Array.isArray(path))
+  console.log(iteration)
+  console.log('currentPath is ' + currentPath)
+  console.log(currentPath)
+  console.log(Array.isArray(currentPath))
   console.log('current start is ' + start)
   if (start[0] === destination[0] && start[1] === destination[1]) {
-    console.log(`=> You made it in ${path.length === 1 ? path.length + ' move' : path.length + ' moves'}!  Here's your path:`)
-    path.forEach((e) => console.log(e))
-    console.log(destination)
-    return `Function concluded successfully.`
+    //RUN FUNCTION AGAIN WITH TESTED PATHS INCLUDED
+  } else if (start === null){
+    //RUN FUNCTION AGAIN WITH TESTED PATHS INCLUDED
+    console.log('start is null')
+    testedPaths.push(path)
+    return knightMoves
   }
 
-  function movementViabilityTest(coordinateArray) {
-    if (path.find((element)=> element[0] === coordinateArray[0] && element[1]===coordinateArray[1])) {
+
+
+
+  // CONCLUSION, USE ONLY AFTER COMPARING TESTEDPATHS
+  // console.log(`=> You made it in ${currentPath.length === 1 ? currentPath.length + ' move' : currentPath.length + ' moves'}!  Here's your path:`)
+  // currentPath.forEach((e) => console.log(e))
+  // console.log(destination)
+  // console.log(iteration)
+  // return `Function concluded successfully.`
+
+  function movementViabilityTest(coordinateArray) {//ADD CHECKING OF TESTED PATH AND IF ALREADY IS TOO LONG
+    if (currentPath.find((element)=> element[0] === coordinateArray[0] && element[1]===coordinateArray[1])) {
       console.log("already visited")
       return false
     } else if (coordinateArray[0] > 7 || coordinateArray[0] < 0) {
@@ -81,8 +94,9 @@ function knightMoves(start, destination, path = []) {
   } else if (movementViabilityTest([start[0] - 2, start[1] - 1])) {
     nextMove = [start[0] - 2, start[1] - 1]
   }
+  
   console.log("next knight Moves runs, the next move is" + nextMove)
-  return knightMoves(nextMove, destination, [...path, start])
+  return knightMoves(nextMove, destination, [...currentPath, start], iteration + 1, testedPaths)
 
   //return nextMove
 }
