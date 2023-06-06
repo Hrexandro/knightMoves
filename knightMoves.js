@@ -22,11 +22,37 @@
 // in JS terms should the board be an object or an array of arrays?
 // is the board even necessary? I could just code the limit in knight's move rules
 
+
+function makeSureNotToLeaveBoard(coordinateArray) {//ADD CHECKING OF TESTED PATH AND IF ALREADY IS TOO LONG
+  if (coordinateArray[0] > 7 || coordinateArray[0] < 0) {
+    return false
+  } else if (coordinateArray[1] > 7 || coordinateArray[1] < 0) {
+    return false
+  } else {
+    return true
+  }
+}
+
 function createBoard() {
   let result = [];
-  for (let x = 0; x <= 8; x++) {
-    for (let y = 0; y <= 8; y++) {
-      result.push([x, y]);
+  for (let x = 0; x <= 7; x++) {
+    for (let y = 0; y <= 7; y++) {
+      let field = {
+        coordinates: [x, y],
+        possibleMoves: []
+      }
+
+      for (let z = 0; z <= 7; z++){
+        //add possible moves to fields
+      }
+
+      field.possibleMoves = [1]
+      result.push(field);
+
+
+
+
+
     }
   }
   return result;
@@ -110,7 +136,7 @@ function knightMoves(start, destination, currentPath = [], iteration = 0, tested
 // knightMoves([start[0] - 2, start[1] - 1], destination),
 
 
-console.log(knightMoves([0, 0], [3, 3]))
+//console.log(knightMoves([0, 0], [3, 3]))
 
 //console.log(knightMoves([0, 0], [2, 4]))
 
