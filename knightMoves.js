@@ -18,9 +18,6 @@
 //     [2,4]
 //     [4,3]
 
-// how to use this graph structure?
-// in JS terms should the board be an object or an array of arrays?
-// is the board even necessary? I could just code the limit in knight's move rules
 
 
 function makeSureNotToLeaveBoard(coordinateArray) {//ADD CHECKING OF TESTED PATH AND IF ALREADY IS TOO LONG
@@ -41,42 +38,33 @@ function createBoard() {
         coordinates: [x, y],
         possibleMoves: []
       }
-
-      for (let z = 0; z <= 7; z++){
-        //add possible moves to fields
+      function addMoves(modifierOne, modifierTwo){
+        let tested = [x + modifierOne, y + modifierTwo]
+        if (makeSureNotToLeaveBoard(tested)){
+          field.possibleMoves.push(tested)
+        }
       }
+      addMoves(+2, +1)
+      addMoves(-2, -1)
+      addMoves(+2, -1)
+      addMoves(-2, +1)
 
-      field.possibleMoves = [1]
+      addMoves(+1, +2)
+      addMoves(-1, -2)
+      addMoves(+1, -2)
+      addMoves(-1, +2)
       result.push(field);
-
-
-
-
-
     }
   }
   return result;
 }
 let board = createBoard();
-console.log(board);
+console.log(board[0])
+console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
 
-function knightMoves(start, destination, currentPath = [], iteration = 0, testedPaths = []) {
-  console.log('function start')
-  console.log(iteration)
-  console.log('currentPath is ' + currentPath)
-  console.log(currentPath)
-  console.log(Array.isArray(currentPath))
-  console.log('current start is ' + start)
-  if (start[0] === destination[0] && start[1] === destination[1]) {
-    //RUN FUNCTION AGAIN WITH TESTED PATHS INCLUDED
-  } else if (start === null){
-    //RUN FUNCTION AGAIN WITH TESTED PATHS INCLUDED
-    console.log('start is null')
-    testedPaths.push(path)
-    return knightMoves
-  }
+function knightMoves(start, destination) {
 
-
+  //retry this, treating possible moves like children of a tree
 
 
   // CONCLUSION, USE ONLY AFTER COMPARING TESTEDPATHS
@@ -85,68 +73,14 @@ function knightMoves(start, destination, currentPath = [], iteration = 0, tested
   // console.log(destination)
   // console.log(iteration)
   // return `Function concluded successfully.`
-
-  function movementViabilityTest(coordinateArray) {//ADD CHECKING OF TESTED PATH AND IF ALREADY IS TOO LONG
-    if (currentPath.find((element)=> element[0] === coordinateArray[0] && element[1]===coordinateArray[1])) {
-      console.log("already visited")
-      return false
-    } else if (coordinateArray[0] > 7 || coordinateArray[0] < 0) {
-      console.log('larger0')
-      return false
-    } else if (coordinateArray[1] > 7 || coordinateArray[1] < 0) {
-      console.log('larger1')
-      return false
-    } else {
-      return true
-    }
-  }
-  let nextMove = null
-
-
-  if (movementViabilityTest([start[0] + 1, start[1] + 2])) {
-    nextMove = [start[0] + 1, start[1] + 2]
-  } else if (movementViabilityTest([start[0] - 1, start[1] + 2])) {
-    nextMove = [start[0] - 1, start[1] + 2]
-  } else if (movementViabilityTest([start[0] + 1, start[1] - 2])) {
-    nextMove = [start[0] + 1, start[1] - 2]
-  } else if (movementViabilityTest([start[0] - 1, start[1] - 2])) {
-    nextMove = [start[0] - 1, start[1] - 2]
-  } else if (movementViabilityTest([start[0] + 2, start[1] + 1])) {
-    nextMove = [start[0] + 2, start[1] + 1]
-  } else if (movementViabilityTest([start[0] - 2, start[1] + 1])) {
-    nextMove = [start[0] - 2, start[1] + 1]
-  } else if (movementViabilityTest([start[0] + 2, start[1] - 1])) {
-    nextMove = [start[0] + 2, start[1] - 1]
-  } else if (movementViabilityTest([start[0] - 2, start[1] - 1])) {
-    nextMove = [start[0] - 2, start[1] - 1]
-  }
-  
-  console.log("next knight Moves runs, the next move is" + nextMove)
-  return knightMoves(nextMove, destination, [...currentPath, start], iteration + 1, testedPaths)
-
-  //return nextMove
 }
-// knightMoves([start[0] + 1, start[1] + 2], destination),
-// knightMoves([start[0] - 1, start[1] + 2], destination),
-// knightMoves([start[0] + 1, start[1] - 2], destination),
-// knightMoves([start[0] - 1, start[1] - 2], destination),
-// knightMoves([start[0] + 2, start[1] + 1], destination),
-// knightMoves([start[0] - 2, start[1] + 1], destination),
-// knightMoves([start[0] + 2, start[1] - 1], destination),
-// knightMoves([start[0] - 2, start[1] - 1], destination),
 
+// console.log(knightMoves([0, 0], [1, 2]))
 
-//console.log(knightMoves([0, 0], [3, 3]))
+// console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]]
 
-//console.log(knightMoves([0, 0], [2, 4]))
+// console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
 
-//console.log([[1],[2]])
-// move1: knightMoves([start[0] + 1, start[1] + 2], destination),
-// move2: knightMoves([start[0] - 1, start[1] + 2], destination),
-// move3: knightMoves([start[0] + 1, start[1] - 2], destination),
-// move4: knightMoves([start[0] - 1, start[1] - 2], destination),
-// move5: knightMoves([start[0] + 2, start[1] + 1], destination),
-// move6: knightMoves([start[0] - 2, start[1] + 1], destination),
-// move7: knightMoves([start[0] + 2, start[1] - 1], destination),
-// move8: knightMoves([start[0] - 2, start[1] - 1], destination),
+// console.log(knightMoves([2, 2], [3, 4]))//one move
+
 
