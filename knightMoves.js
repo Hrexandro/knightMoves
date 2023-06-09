@@ -20,7 +20,7 @@
 
 
 
-function makeSureNotToLeaveBoard(coordinateArray) {//ADD CHECKING OF TESTED PATH AND IF ALREADY IS TOO LONG
+function makeSureNotToLeaveBoard(coordinateArray) {
   if (coordinateArray[0] > 7 || coordinateArray[0] < 0) {
     return false
   } else if (coordinateArray[1] > 7 || coordinateArray[1] < 0) {
@@ -59,12 +59,31 @@ function createBoard() {
   return result;
 }
 let board = createBoard();
-console.log(board[0])
-console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
+//console.log(board[0])
+//console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
 
-function knightMoves(start, destination) {
+function knightMoves(start, destination, path = []) {
+  console.log("start:")
+  console.log(start)
+  console.log("path:")
+  console.log(path)
+  if (start.toString() === destination.toString()){
+    console.log("found")
+    console.log(path)
+    return "found"
+  }
 
-  //retry this, treating possible moves like children of a tree
+  let availableMoves = board.find((e) => e.coordinates.toString() === start.toString()).possibleMoves
+
+  for (let i = 0; i < availableMoves.length; i++){
+    if (!path.some((e) => JSON.stringify(e) === JSON.stringify(availableMoves[i]))){
+      // console.log("updated path")
+      // console.log([... path, start])
+      knightMoves(availableMoves[i], destination, [... path, start])
+    }
+
+  }
+
 
 
   // CONCLUSION, USE ONLY AFTER COMPARING TESTEDPATHS
@@ -75,7 +94,9 @@ function knightMoves(start, destination) {
   // return `Function concluded successfully.`
 }
 
-// console.log(knightMoves([0, 0], [1, 2]))
+ //console.log(knightMoves([0, 0], [0, 0]))
+//console.log(knightMoves([1, 2], [0, 0]))
+ console.log(knightMoves([0, 0], [1, 2]))
 
 // console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]]
 
