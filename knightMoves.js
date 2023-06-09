@@ -63,10 +63,7 @@ let board = createBoard();
 //console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
 
 function knightMoves(start, destination, path = []) {
-  console.log("start:")
-  console.log(start)
-  console.log("path:")
-  console.log(path)
+
   if (start.toString() === destination.toString()){
     console.log("found")
     console.log(path)
@@ -77,8 +74,11 @@ function knightMoves(start, destination, path = []) {
 
   for (let i = 0; i < availableMoves.length; i++){
     if (!path.some((e) => JSON.stringify(e) === JSON.stringify(availableMoves[i]))){
-      // console.log("updated path")
-      // console.log([... path, start])
+
+
+      //add comparing of paths and avoiding longer paths than already taken
+
+
       knightMoves(availableMoves[i], destination, [... path, start])
     }
 
