@@ -69,12 +69,19 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
   let shortestPathsToFields = []//visitedLast? pathtoParticular field!
 
   function knightMovesRecursion(start, destination, path = []) {
+    // paths to all field are set as infinity
+    // if the shortest path to the start field is longer than the path taken in this recursion
+    // update the path in the array
+    // else return
+
+
+
     if (path.length > shortestPathFoundYetLength) {//path longer than the longest path to the searched field
       console.log(shortestPathFoundYetLength)
       console.log("path too long, returning, path is:")
       console.log(path)
       return
-    } else if (start.toString() === destination.toString()) {
+    } else if (start.toString() === destination.toString()) {//searched field found
       console.log(path.length)
       console.log(shortestPathFoundYet)
       //console.log(shortestPathFoundYetLength)
@@ -85,7 +92,7 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
       console.log("found")
       console.log(path)
       return
-    } else {
+    } else {//continue
       let availableMoves = board.find((e) => e.coordinates.toString() === start.toString()).possibleMoves
 
       for (let i = 0; i < availableMoves.length; i++) {
