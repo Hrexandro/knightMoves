@@ -38,9 +38,9 @@ function createBoard() {
         coordinates: [x, y],
         possibleMoves: []
       }
-      function addMoves(modifierOne, modifierTwo){
+      function addMoves(modifierOne, modifierTwo) {
         let tested = [x + modifierOne, y + modifierTwo]
-        if (makeSureNotToLeaveBoard(tested)){
+        if (makeSureNotToLeaveBoard(tested)) {
           field.possibleMoves.push(tested)
         }
       }
@@ -62,30 +62,47 @@ let board = createBoard();
 //console.log(board[0])
 //console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
 
-function knightMoves(start, destination, path = []) {
+function knightMoves(start, destination, path = []) { //paths are repeating too much
 
-  if (start.toString() === destination.toString()){
-    console.log("found")
-    console.log(path)
-    return "found"
-  }
+  let shortestPathFoundYetLength = Infinity
+  let shortestPathFoundYet = null
+  let shortestPathsToFields = []//visitedLast? pathtoParticular field!
 
-  let availableMoves = board.find((e) => e.coordinates.toString() === start.toString()).possibleMoves
+  function knightMovesRecursion(start, destination, path = []) {
+    if (path.length > shortestPathFoundYetLength) {//path longer than the longest path to the searched field
+      console.log(shortestPathFoundYetLength)
+      console.log("path too long, returning, path is:")
+      console.log(path)
+      return
+    } else if (start.toString() === destination.toString()) {
+      console.log(path.length)
+      console.log(shortestPathFoundYet)
+      //console.log(shortestPathFoundYetLength)
+      if (path.length < shortestPathFoundYetLength) {
+        shortestPathFoundYet = path
+        shortestPathFoundYetLength = shortestPathFoundYet.length
+      }
+      console.log("found")
+      console.log(path)
+      return
+    } else {
+      let availableMoves = board.find((e) => e.coordinates.toString() === start.toString()).possibleMoves
 
-  for (let i = 0; i < availableMoves.length; i++){
-    if (!path.some((e) => JSON.stringify(e) === JSON.stringify(availableMoves[i]))){
+      for (let i = 0; i < availableMoves.length; i++) {
+        if (!path.some((e) => JSON.stringify(e) === JSON.stringify(availableMoves[i]))) {
+          knightMovesRecursion(availableMoves[i], destination, [...path, start])
+        }
+
+      }
 
 
-      //add comparing of paths and avoiding longer paths than already taken
-
-
-      knightMoves(availableMoves[i], destination, [... path, start])
     }
-
   }
 
+  knightMovesRecursion(start, destination, path = [])
 
-
+  console.log(shortestPathFoundYet)
+  return shortestPathFoundYet
   // CONCLUSION, USE ONLY AFTER COMPARING TESTEDPATHS
   // console.log(`=> You made it in ${currentPath.length === 1 ? currentPath.length + ' move' : currentPath.length + ' moves'}!  Here's your path:`)
   // currentPath.forEach((e) => console.log(e))
@@ -94,9 +111,9 @@ function knightMoves(start, destination, path = []) {
   // return `Function concluded successfully.`
 }
 
- //console.log(knightMoves([0, 0], [0, 0]))
+//console.log(knightMoves([0, 0], [0, 0]))
 //console.log(knightMoves([1, 2], [0, 0]))
- console.log(knightMoves([0, 0], [1, 2]))
+console.log(knightMoves([0, 0], [1, 2]))
 
 // console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]]
 
