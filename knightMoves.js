@@ -80,15 +80,17 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
     // update the path in the array
 
 
-    //the below does not fire, check why
-    if (shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start).shortestPathsToFields > path.length)) {//if path is longer than shortest visited, return
-      console.log("the new if runs")
-      console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates === JSON.stringify(start))))
+    console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart)
 
+    //replace this monstrosity with a variable
+    if (shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start).shortestDistanceFromStart < path.length)) {//if path is longer than shortest visited, return
+      // console.log("the new if runs")
+      // console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates === JSON.stringify(start))))
+      return
 
-    } else{//do all rest
-
-    }
+    } else if (shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start).shortestDistanceFromStart > path.length)){//do all rest
+      shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart = path
+    } //keeps logging infinity
 
 
     if (path.length > shortestPathFoundYetLength) {//path longer than the longest path to the searched field
