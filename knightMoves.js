@@ -59,21 +59,36 @@ function createBoard() {
   return result;
 }
 let board = createBoard();
-//console.log(board[0])
+//console.log(board)
 //console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
 
 function knightMoves(start, destination, path = []) { //paths are repeating too much
 
   let shortestPathFoundYetLength = Infinity
   let shortestPathFoundYet = null
-  let shortestPathsToFields = []//visitedLast? pathtoParticular field!
+  let shortestPathsToFields = []
+
+  for (let j = 0; j < board.length; j++) {
+    let fieldToAdd = board[j]
+    fieldToAdd.shortestDistanceFromStart = Infinity
+    shortestPathsToFields.push(fieldToAdd)
+  }
 
   function knightMovesRecursion(start, destination, path = []) {
     // paths to all field are set as infinity
     // if the shortest path to the start field is longer than the path taken in this recursion
     // update the path in the array
-    // else return
 
+
+    //the below does not fire, check why
+    if (shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start).shortestPathsToFields > path.length)) {//if path is longer than shortest visited, return
+      console.log("the new if runs")
+      console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates === JSON.stringify(start))))
+
+
+    } else{//do all rest
+
+    }
 
 
     if (path.length > shortestPathFoundYetLength) {//path longer than the longest path to the searched field
@@ -84,7 +99,7 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
     } else if (start.toString() === destination.toString()) {//searched field found
       console.log(path.length)
       console.log(shortestPathFoundYet)
-      //console.log(shortestPathFoundYetLength)
+      console.log(shortestPathFoundYetLength)
       if (path.length < shortestPathFoundYetLength) {
         shortestPathFoundYet = path
         shortestPathFoundYetLength = shortestPathFoundYet.length
@@ -93,6 +108,9 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
       console.log(path)
       return
     } else {//continue
+
+
+
       let availableMoves = board.find((e) => e.coordinates.toString() === start.toString()).possibleMoves
 
       for (let i = 0; i < availableMoves.length; i++) {
@@ -119,8 +137,8 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
 }
 
 //console.log(knightMoves([0, 0], [0, 0]))
-//console.log(knightMoves([1, 2], [0, 0]))
-console.log(knightMoves([0, 0], [1, 2]))
+console.log(knightMoves([1, 2], [0, 0]))
+//console.log(knightMoves([0, 0], [1, 2]))
 
 // console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]]
 
