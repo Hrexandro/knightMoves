@@ -80,17 +80,21 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
     // update the path in the array
 
 
-    console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart)
-
-    //replace this monstrosity with a variable
-    if (shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start).shortestDistanceFromStart < path.length)) {//if path is longer than shortest visited, return
-      // console.log("the new if runs")
-      // console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates === JSON.stringify(start))))
+    let currentFieldOnFieldList = shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start))
+    console.log(currentFieldOnFieldList.shortestDistanceFromStart)
+    console.log(path.length)
+    if (currentFieldOnFieldList.shortestDistanceFromStart < path.length) {//if path is longer than shortest visited, return
+      console.log("path too long")
+      console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates === JSON.stringify(start))))
       return
 
-    } else if (shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start).shortestDistanceFromStart > path.length)){//do all rest
-      shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart = path
-    } //keeps logging infinity
+    } else if (currentFieldOnFieldList.shortestDistanceFromStart > path.length){//do all rest
+      console.log("path short enough, old path")
+      console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)))
+      console.log("new path")
+      console.log(path)
+      shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart = path.length //don't copy because we are changing the original
+    } 
 
 
     if (path.length > shortestPathFoundYetLength) {//path longer than the longest path to the searched field
@@ -127,25 +131,37 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
   }
 
   knightMovesRecursion(start, destination, path = [])
+  console.log("ending the whole function")
 
-  console.log(shortestPathFoundYet)
-  return shortestPathFoundYet
+  // return [...shortestPathFoundYet, destination ]
   // CONCLUSION, USE ONLY AFTER COMPARING TESTEDPATHS
   // console.log(`=> You made it in ${currentPath.length === 1 ? currentPath.length + ' move' : currentPath.length + ' moves'}!  Here's your path:`)
   // currentPath.forEach((e) => console.log(e))
   // console.log(destination)
   // console.log(iteration)
   // return `Function concluded successfully.`
+  console.log("check")
+  console.log(shortestPathFoundYet.length)
+  console.log(shortestPathFoundYet.length - 1)
+  console.log(`=> You made it in ${shortestPathFoundYet.length + (shortestPathFoundYet.length === 1 ? ' move' : ' moves')}!  Here's your path:`)
+  shortestPathFoundYet.forEach((e) => console.log(e))
+  console.log(destination)
+  // console.log(destination)
+  // console.log(iteration)
+  // return `Function concluded successfully.`
+
+
+  return `Function concluded successfully.`
 }
 
 //console.log(knightMoves([0, 0], [0, 0]))
-console.log(knightMoves([1, 2], [0, 0]))
+//console.log(knightMoves([1, 2], [0, 0]))
 //console.log(knightMoves([0, 0], [1, 2]))
 
-// console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]]
+//console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]] //mine returns [[0,0],[2,1],[3,3]]
 
-// console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
+ console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
 
-// console.log(knightMoves([2, 2], [3, 4]))//one move
+ //console.log(knightMoves([2, 2], [3, 4]))//one move
 
 
