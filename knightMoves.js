@@ -20,6 +20,11 @@
 
 
 
+//TO DO: TEST THE PROCESS SO THAT FILTERING LONGER PATHS WORKS CORRECTLY
+//IF STILL TAKES TOO LONG - TRY TO IMPLEMENT A DIFFERENT SEARCH ALGORITHM - COMPARE TO BINARY SEARCH TREES
+
+
+
 function makeSureNotToLeaveBoard(coordinateArray) {
   if (coordinateArray[0] > 7 || coordinateArray[0] < 0) {
     return false
@@ -59,10 +64,8 @@ function createBoard() {
   return result;
 }
 let board = createBoard();
-//console.log(board)
-//console.log(board.find((e) => (e.coordinates.toString() === '2,2')));
 
-function knightMoves(start, destination, path = []) { //paths are repeating too much
+function knightMoves(start, destination, path = []) {
 
   let shortestPathFoundYetLength = Infinity
   let shortestPathFoundYet = null
@@ -75,10 +78,6 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
   }
 
   function knightMovesRecursion(start, destination, path = []) {
-    // paths to all field are set as infinity
-    // if the shortest path to the start field is longer than the path taken in this recursion
-    // update the path in the array
-
 
     let currentFieldOnFieldList = shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start))
     console.log(currentFieldOnFieldList.shortestDistanceFromStart)
@@ -158,9 +157,9 @@ function knightMoves(start, destination, path = []) { //paths are repeating too 
 //console.log(knightMoves([1, 2], [0, 0]))
 //console.log(knightMoves([0, 0], [1, 2]))
 
-//console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]] //mine returns [[0,0],[2,1],[3,3]]
+console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]] //mine returns [[0,0],[2,1],[3,3]]
 
- console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
+//console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
 
  //console.log(knightMoves([2, 2], [3, 4]))//one move
 
