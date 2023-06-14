@@ -64,11 +64,11 @@ function createBoard() {
   return result;
 }
 let board = createBoard();
-
+console.log(board)
 function knightMoves(start, destination, path = []) {
 
-  let shortestPathFoundYetLength = Infinity
-  let shortestPathFoundYet = null
+  let lengthOfPathToDestination = Infinity
+  let currentShortestPathToDestination = null
   let shortestPathsToFields = []
 
   for (let j = 0; j < board.length; j++) {
@@ -87,7 +87,7 @@ function knightMoves(start, destination, path = []) {
       console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates === JSON.stringify(start))))
       return
 
-    } else if (currentFieldOnFieldList.shortestDistanceFromStart > path.length){//do all rest
+    } else if (currentFieldOnFieldList.shortestDistanceFromStart > path.length){//new path is shorter, update
       console.log("path short enough, old path")
       console.log(shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)))
       console.log("new path")
@@ -96,18 +96,20 @@ function knightMoves(start, destination, path = []) {
     } 
 
 
-    if (path.length > shortestPathFoundYetLength) {//path longer than the longest path to the searched field
-      console.log(shortestPathFoundYetLength)
-      console.log("path too long, returning, path is:")
-      console.log(path)
-      return
-    } else if (start.toString() === destination.toString()) {//searched field found
+    // if (path.length > lengthOfPathToDestination) {//path longer than the longest path to the searched field - THIS SHOULDN'T BE NECESSARY
+    //   console.log(lengthOfPathToDestination)
+    //   console.log("path too long, returning, path is:")
+    //   console.log(path)
+    //   return
+    // } else 
+    if (start.toString() === destination.toString()) {//searched field found
+      console.log("searched field found")
       console.log(path.length)
-      console.log(shortestPathFoundYet)
-      console.log(shortestPathFoundYetLength)
-      if (path.length < shortestPathFoundYetLength) {
-        shortestPathFoundYet = path
-        shortestPathFoundYetLength = shortestPathFoundYet.length
+      console.log(currentShortestPathToDestination)
+      console.log(lengthOfPathToDestination)
+      if (path.length < lengthOfPathToDestination) {
+        currentShortestPathToDestination = path
+        lengthOfPathToDestination = currentShortestPathToDestination.length
       }
       console.log("found")
       console.log(path)
@@ -132,7 +134,7 @@ function knightMoves(start, destination, path = []) {
   knightMovesRecursion(start, destination, path = [])
   console.log("ending the whole function")
 
-  // return [...shortestPathFoundYet, destination ]
+  // return [...currentShortestPathToDestination, destination ]
   // CONCLUSION, USE ONLY AFTER COMPARING TESTEDPATHS
   // console.log(`=> You made it in ${currentPath.length === 1 ? currentPath.length + ' move' : currentPath.length + ' moves'}!  Here's your path:`)
   // currentPath.forEach((e) => console.log(e))
@@ -140,10 +142,10 @@ function knightMoves(start, destination, path = []) {
   // console.log(iteration)
   // return `Function concluded successfully.`
   console.log("check")
-  console.log(shortestPathFoundYet.length)
-  console.log(shortestPathFoundYet.length - 1)
-  console.log(`=> You made it in ${shortestPathFoundYet.length + (shortestPathFoundYet.length === 1 ? ' move' : ' moves')}!  Here's your path:`)
-  shortestPathFoundYet.forEach((e) => console.log(e))
+  console.log(currentShortestPathToDestination.length)
+  console.log(currentShortestPathToDestination.length - 1)
+  console.log(`=> You made it in ${currentShortestPathToDestination.length + (currentShortestPathToDestination.length === 1 ? ' move' : ' moves')}!  Here's your path:`)
+  currentShortestPathToDestination.forEach((e) => console.log(e))
   console.log(destination)
   // console.log(destination)
   // console.log(iteration)
