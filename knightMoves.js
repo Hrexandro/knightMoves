@@ -143,16 +143,19 @@ function knightMoves(start, destination, path = []) {
       return
     }
     let currentFieldOnFieldList = shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start))
-    // console.log("checking this error")
+    // console.log(currentShortestPathToDestination)
+    // console.log(JSON.stringify(queue))
     // console.log(destination)
     // console.log(shortestPathsToFields)
     // console.log(currentFieldOnFieldList)
-    if (currentFieldOnFieldList.shortestDistanceFromStart < path.length) {//if path is longer than shortest visited, return
-      return
 
-    } else if (currentFieldOnFieldList.shortestDistanceFromStart > path.length){//new path is shorter, update
-      shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart = path.length //don't copy because we are changing the original
-    } 
+    //check without this
+    // if (currentFieldOnFieldList.shortestDistanceFromStart < path.length) {//if path is longer than shortest visited, return
+    //   return
+
+    // } else if (currentFieldOnFieldList.shortestDistanceFromStart > path.length){//new path is shorter, update
+    //   shortestPathsToFields.find((e)=>JSON.stringify(e.coordinates) === JSON.stringify(start)).shortestDistanceFromStart = path.length //don't copy because we are changing the original
+    // } 
 
     if (start.toString() === destination.toString()) {//searched field found
       if (path.length < lengthOfPathToDestination) {
@@ -180,10 +183,10 @@ function knightMoves(start, destination, path = []) {
     }
     queue.shift()
     knightMovesRecursion(queue[0].start, queue[0].destination, queue[0].path)
-    console.log(queue)
+    // console.log(queue)
   }//end of recursion
-  console.log(queue)
-  knightMovesRecursion(queue[0].start, queue[0].destination, queue[0].path)
+  // console.log(queue)
+  knightMovesRecursion(queue[0].start, queue[0].destination)
   console.log("ending the whole function")
 
 
@@ -206,9 +209,9 @@ function knightMoves(start, destination, path = []) {
   
   //console.log(knightMoves([0, 0], [3, 3])) //[[0,0],[1,2],[3,3]] //mine returns [[0,0],[2,1],[3,3]]
   
-  console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
+  //console.log(knightMoves([3, 3], [0, 0]))// [[3,3],[1,2],[0,0]]
   
   //console.log(knightMoves([2, 2], [3, 4]))//one move
 
 
-  console.log(knightMoves([0, 0], [5, 2]))
+  console.log(knightMoves([0, 0], [3, 7]))
